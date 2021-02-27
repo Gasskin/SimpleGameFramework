@@ -54,15 +54,15 @@ namespace SimpleGameFramework.Event
         }
  
         /// 订阅事件
-        public void Subscribe(int id, EventHandler<GlobalEventArgs> handler)
+        public void Subscribe(SGFEvents id, EventHandler<GlobalEventArgs> handler)
         {
-            m_EventPool.Subscribe(id, handler);
+            m_EventPool.Subscribe(id.GetHashCode(), handler);
         }
  
         /// 取消订阅事件
-        public void Unsubscribe(int id, EventHandler<GlobalEventArgs> handler)
+        public void Unsubscribe(SGFEvents id, EventHandler<GlobalEventArgs> handler)
         {
-            m_EventPool.Unsubscribe(id, handler);
+            m_EventPool.Unsubscribe(id.GetHashCode(), handler);
         }
         
         /// 抛出事件（线程安全）

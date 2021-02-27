@@ -26,7 +26,7 @@ public class test : MonoBehaviour
     void Start()
     {
         m_EventManager =  SGFEntry.Instance.GetManager<EventManager>();
-        m_EventManager.Subscribe(1, EventTestMethod);
+        m_EventManager.Subscribe(SGFEvents.TEST, EventTestMethod);
     }
 
     private void Update()

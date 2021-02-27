@@ -2,13 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 namespace SimpleGameFramework.Core
 {
-    /// <summary>
     /// 框架入口，管理所有的模块
-    /// </summary>
-    public class SGFEntry : ScriptSingleton<SGFEntry>
+    public class SGFEntry : Singleton<SGFEntry>
     {
+        // 所有的Public变量都只是为了显示当前框架的一些信息，只读，不可修改，会显示在Inspector面板中
+        #region Insperctor面板信息
+
+        private float _preTime;
+        [ReadOnly("更新耗时")]
+        public float _deltaTime;
+        
+        [ReadOnly("管理器数量")]
+        public int _managerCounts;
+
+        #endregion
+        
         #region Private
         /// 维护了所有的管理器，并按照管理器的优先级由大到小排序
         private LinkedList<ManagerBase> m_Managers = new LinkedList<ManagerBase>();
@@ -19,10 +30,13 @@ namespace SimpleGameFramework.Core
         /// 依次更新所有的管理器
         private void Update()
         {
+            _preTime = Time.realtimeSinceStartup;
             foreach (var manager in m_Managers)
             {
                 manager.Update(Time.deltaTime);
             }
+            _deltaTime = Time.realtimeSinceStartup-_preTime;
+            _managerCounts = m_Managers.Count;
         }
 
         /// 倒序销毁所有的管理器
@@ -59,7 +73,7 @@ namespace SimpleGameFramework.Core
         #endregion
 
         #region Private 工具方法
-        
+
         /// 创建一个管理器 
         private ManagerBase CreateManager(Type managerType)
         {

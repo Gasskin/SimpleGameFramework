@@ -4,7 +4,8 @@ using SimpleGameFramework.ReferencePool;
 
 namespace SimpleGameFramework.Event
 {
-    /// 事件节点，记录事件的发送者与信息
+    /// 事件节点，记录事件的发送者与信息并放入事件队列
+    /// 仅用于多线中的事件抛出，保证线程安全
     public class Event<T> where T : GlobalEventArgs
     {
         public Event(object sender,T e)
@@ -56,10 +57,10 @@ namespace SimpleGameFramework.Event
             {
                 m_EventHandlers[id] = handler;
             }
-            // 不为空，就检查是否处理方法重复了
+            // 不为空，就检查处理方法是否重复了
             else if (Check(id, handler))
             {
-                throw new Exception("要订阅事件的处理方法已存在...");
+                throw new Exception("ID为:" + (SGFEvents)id + "的事件下已存在这个处理方法:" + nameof(handler) + "...");
             }
             else
             {
@@ -96,7 +97,7 @@ namespace SimpleGameFramework.Event
             }
         }
         
-        /// 抛出事件（线程安全），不论是否在主线程中抛出，事件都会在下一帧才处理
+        /// 抛出事件（线程安全），会按照先后顺序把事件添加进事件队列，并在下一帧处理
         public void Fire(object sender, T e)
         {
             //将事件源和事件参数封装为Event加入队列

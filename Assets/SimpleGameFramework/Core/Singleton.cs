@@ -1,14 +1,15 @@
-﻿using UnityEngine;
+﻿using SimpleGameFramework.ReferencePool;
+using UnityEngine;
 
 namespace SimpleGameFramework.Core
 {
     /// <summary>
     /// 脚本的单例模板基类
     /// </summary>
-    public abstract class ScriptSingleton<T>  : MonoBehaviour where T : ScriptSingleton<T>
+    public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
     {
-        
         protected static T _instance;
+
         public static T Instance
         {
             get
@@ -17,19 +18,19 @@ namespace SimpleGameFramework.Core
                 {
                     //从场景中找T脚本的对象
                     _instance = FindObjectOfType<T>();
- 
+
                     if (FindObjectsOfType<T>().Length > 1)
                     {
                         Debug.LogError("场景中的单例脚本数量 > 1:" + _instance.GetType().ToString());
                         return _instance;
                     }
- 
+
                     //场景中找不到的情况
                     if (_instance == null)
                     {
                         string instanceName = typeof(T).Name;
                         GameObject instanceGO = GameObject.Find(instanceName);
- 
+
                         if (instanceGO == null)
                         {
                             instanceGO = new GameObject(instanceName);
@@ -44,15 +45,14 @@ namespace SimpleGameFramework.Core
                         }
                     }
                 }
- 
+
                 return _instance;
             }
         }
- 
+
         void OnDestroy()
         {
             _instance = null;
         }
- 
     }
 }
