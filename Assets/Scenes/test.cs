@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using SimpleGameFramework.ReferencePool;
 using UnityEngine;
 
 public class test : MonoBehaviour
@@ -7,9 +8,7 @@ public class test : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        AssetBundle ab = AssetBundle.LoadFromFile("AssetBundles/prefab/test.cube");
-        GameObject obj = ab.LoadAsset<GameObject>("BundleCube");
-        Instantiate(obj);
+        Debug.Log(typeof(IReference).FullName);
     }
 
     // Update is called once per frame
