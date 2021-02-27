@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace SimpleGameFramework.ReferencePool
 {
@@ -29,6 +31,17 @@ namespace SimpleGameFramework.ReferencePool
         public static T Acquire<T>() where T : class, IReference, new()
         {
             return GetReferenceCollection(typeof(T).FullName).Acquire<T>();
+        }
+        
+        /// 将引用归还引用集合
+        public static void Release<T>(T reference) where T : class, IReference
+        {
+            if (reference == null)
+            {
+                throw new Exception("要归还的引用为空...");
+            }
+ 
+            GetReferenceCollection(typeof(T).FullName).Release(reference);
         }
 
         /// 清除所有引用集合
