@@ -10,10 +10,7 @@ namespace SimpleGameFramework.Core
     public abstract class ManagerBase
     {
         /// 模块优先级，优先级高的模块会被先被更新，后被关闭 
-        public virtual int Priority
-        {
-            get { return 0; }
-        }
+        public abstract int Priority { get; }
 
         /// 初始化模块
         public abstract void Init();

@@ -16,30 +16,35 @@ public class EventTestArgs : GlobalEventArgs
     }
     public override void Clear()
     {
+        Debug.Log("清理");
         name = String.Empty;
+    }
+
+    public EventTestArgs()
+    {
+        Debug.Log("构造");
     }
 }
 
 public class test : MonoBehaviour
 {
     private EventManager m_EventManager;
+    private ReferenceManager m_ReferenceManager;
     void Start()
     {
-        m_EventManager =  SGFEntry.Instance.GetManager<EventManager>();
-        m_EventManager.Subscribe(SGFEvents.TEST, EventTestMethod);
+        m_EventManager = SGFEntry.Instance.GetManager<EventManager>();
+        m_ReferenceManager = SGFEntry.Instance.GetManager<ReferenceManager>();
     }
-
-    private void Update()
+    
+    private IEnumerator TestCoroutine()
     {
-        Profiler.BeginSample("==Test==");
-
-        // EventTestArgs e = ReferencePool.Acquire<EventTestArgs>();
-        EventTestArgs e = new EventTestArgs();
-        e.name = "test test test";
-        m_EventManager.FireNow(this,e);
-
-        Profiler.EndSample();
-        
+        for (int i = 0; i < 5; i++)
+        {
+            Debug.Log(i);
+            yield return null;
+        }
+        yield break;
+        Debug.Log("break");
     }
 
     private void EventTestMethod(object sender, GlobalEventArgs e)

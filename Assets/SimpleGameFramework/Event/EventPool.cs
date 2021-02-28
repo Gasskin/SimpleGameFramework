@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using SimpleGameFramework.Core;
 using SimpleGameFramework.ReferencePool;
 
 namespace SimpleGameFramework.Event
@@ -83,7 +84,7 @@ namespace SimpleGameFramework.Event
             }
         }
 
-        /// 按顺序执行所有事件
+        /// 按顺序执行所有事件队列里的事件
         public void Update(float time)
         {
             while (m_Events.Count > 0)
@@ -130,6 +131,7 @@ namespace SimpleGameFramework.Event
             m_EventHandlers.Clear();
         }
 
+        /// 检查某个编码的事件是否存在它对应的处理方法
         public bool Check(int id, EventHandler<T> handler)
         {
             if (handler == null)
@@ -181,10 +183,11 @@ namespace SimpleGameFramework.Event
                     throw new Exception("事件没有对应处理方法：" + eventId);
                 }
             }
-            ReferencePool.ReferencePool.Release(e);
+            // 归还引用
+            SGFEntry.Instance.GetManager<ReferenceManager>().Release(e);
         }
         
-        /// 检查某个编码的事件是否存在它对应的处理方法
+        
         
 
         #endregion

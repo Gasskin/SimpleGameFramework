@@ -25,7 +25,7 @@ namespace SimpleGameFramework.Event
 
         public override int Priority
         {
-            get { return 100; }
+            get { return ManagerPriority.EventManager.GetHashCode(); }
         }
 
         public override void Init()

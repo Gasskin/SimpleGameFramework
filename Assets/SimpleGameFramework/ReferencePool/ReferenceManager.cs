@@ -1,21 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using SimpleGameFramework.Core;
 using UnityEngine;
 
 namespace SimpleGameFramework.ReferencePool
 {
-    public static class ReferencePool
+    public class ReferenceManager : ManagerBase
     {
         #region Private
 
         /// 维护所有的引用集合，每一个集合内有多个同类型引用
-        private static Dictionary<string, ReferenceCollection> s_ReferenceCollections = new Dictionary<string, ReferenceCollection>();
+        private Dictionary<string, ReferenceCollection> s_ReferenceCollections;
 
+        /// 清理间隔，每过一段时间，就会清空队列里的引用（还在队列里，说明是空引用），m_temp用于实际计算，想要修改清理间隔可以修改clearInterval
+        private float m_ClearInterval = 60f;
+        private float m_Temp;
+        
         #endregion
 
         #region Public
 
-        public static int Count
+        public int Count
         {
             get
             {
@@ -25,16 +30,61 @@ namespace SimpleGameFramework.ReferencePool
 
         #endregion
 
+        #region 构造函数
+
+        public ReferenceManager()
+        {
+            s_ReferenceCollections = new Dictionary<string, ReferenceCollection>();
+        }
+
+        #endregion
+
+        #region Override
+
+        public override int Priority
+        {
+            get
+            {
+                return ManagerPriority.ReferenceManager.GetHashCode();
+            }
+        }
+
+        public override void Init()
+        {
+            m_Temp = m_ClearInterval;
+        }
+
+        public override void Update(float time)
+        {
+            m_Temp -= time;
+            if (m_Temp < 0f) 
+            {
+                foreach (var e in s_ReferenceCollections)
+                {
+                    e.Value.RemoveAll();
+                }
+
+                m_Temp = m_ClearInterval;
+            }
+        }
+
+        public override void ShutDown()
+        {
+            
+        }
+        
+        #endregion
+
         #region Public 接口方法
 
         /// 从引用集合获取引用
-        public static T Acquire<T>() where T : class, IReference, new()
+        public  T Acquire<T>() where T : class, IReference, new()
         {
             return GetReferenceCollection(typeof(T).FullName).Acquire<T>();
         }
         
         /// 将引用归还引用集合
-        public static void Release<T>(T reference) where T : class, IReference
+        public  void Release<T>(T reference) where T : class, IReference
         {
             if (reference == null)
             {
@@ -45,7 +95,7 @@ namespace SimpleGameFramework.ReferencePool
         }
 
         /// 清除所有引用集合
-        public static void ClearAll()
+        public  void ClearAll()
         {
             lock (s_ReferenceCollections)
             {
@@ -59,7 +109,7 @@ namespace SimpleGameFramework.ReferencePool
         }
         
         /// 从引用集合中移除所有的引用
-        public static void RemoveAll<T>() where T : class, IReference
+        public  void RemoveAll<T>() where T : class, IReference
         {
             GetReferenceCollection(typeof(T).FullName).RemoveAll();
         }
@@ -69,7 +119,7 @@ namespace SimpleGameFramework.ReferencePool
         #region Private 工具方法
 
         /// 获取引用集合
-        private static ReferenceCollection GetReferenceCollection(string fullName)
+        private  ReferenceCollection GetReferenceCollection(string fullName)
         {
             ReferenceCollection referenceCollection = null;
             lock (s_ReferenceCollections)
@@ -83,7 +133,9 @@ namespace SimpleGameFramework.ReferencePool
  
             return referenceCollection;
         }
-
+        
         #endregion
+
+        
     }
 }
