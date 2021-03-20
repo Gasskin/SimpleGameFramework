@@ -27,6 +27,18 @@ namespace SimpleGameFramework.Core
 
         #region MonoBehaviour
 
+        /// 初始化根节点
+        private void Awake()
+        {
+            var names = Enum.GetNames(typeof(ManagerPriority));
+            for (int i = 0, imax = names.Length; i < imax; i++)
+            {
+                GameObject go = new GameObject(names[i]);
+                go.transform.SetParent(transform);
+                go.SetActive(false);
+            }
+        }
+
         /// 依次更新所有的管理器
         private void Update()
         {
@@ -58,6 +70,10 @@ namespace SimpleGameFramework.Core
         public TManager GetManager<TManager>() where TManager : ManagerBase
         {
             Type managerType = typeof(TManager);
+
+            // 打开SGFEntry下对应的节点
+            transform.Find(managerType.Name).gameObject.SetActive(true);            
+            
             // 检查是否存在对应管理器
             foreach (var manager in m_Managers)
             {
