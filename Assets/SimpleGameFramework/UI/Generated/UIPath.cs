@@ -1,6 +1,6 @@
 ﻿//==========================================
 // 这个文件是自动生成的...
-// 生成日期：2021年3月20日16点51分
+// 生成日期：2021年3月20日17点14分
 //
 //
 //==========================================
@@ -8,5 +8,5 @@
 
 public static class UIPath
 {
-    public const string TESTUI="UI/TestUI";
+    public const string TESTUI = "UI/TestUI";
 }

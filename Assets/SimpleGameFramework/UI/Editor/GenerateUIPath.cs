@@ -35,7 +35,7 @@ public static class GenerateUIPath
         sb.AppendLine("{");
         for (int i = 0, imax = names.Length; i < imax; i++)
         {
-            sb.AppendLine($"    public const string {names[i].ToUpper()}=\"UI/{names[i]}\";");
+            sb.AppendLine($"    public const string {names[i].ToUpper()} = \"UI/{names[i]}\";");
         }
         sb.AppendLine("}");
 
