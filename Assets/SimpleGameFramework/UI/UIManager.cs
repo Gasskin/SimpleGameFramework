@@ -171,6 +171,11 @@ public class UIManager : ManagerBase
         }
     }
 
+    /// <summary>
+    /// 将UI加入对应链表，并真正的控制当前UI的显示隐藏逻辑
+    /// </summary>
+    /// <param name="ui"></param>
+    /// <param name="list"></param>
     private void AddToList(UIBase ui, LinkedList<UIBase> list)
     {
         // 打开一个新的UI，当前UI必然被冻结，但未必会隐藏，打开Normal会隐藏Normal但不会隐藏Fixed
