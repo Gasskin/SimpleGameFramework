@@ -71,7 +71,7 @@ public class UIManager : ManagerBase
 
     public void OpenUI()
     {
-        GameObject go = Resources.Load<GameObject>("UI/TestUI");
+        GameObject go = Resources.Load<GameObject>(UIPath.TESTUI);
         var prefab = GameObject.Instantiate(go);
         prefab.transform.SetParent(normalRoot,false);
     }
