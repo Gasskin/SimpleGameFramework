@@ -51,7 +51,7 @@ public static class GenerateUIPath
         }
         sb.AppendLine("}");
 
-        var wirtePath = path + "/UIPath.cs";
+        var wirtePath = path + "/UIs.cs";
         File.WriteAllText(wirtePath,sb.ToString(),Encoding.UTF8);
         
         AssetDatabase.Refresh();

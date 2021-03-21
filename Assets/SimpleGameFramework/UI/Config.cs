@@ -21,5 +21,10 @@ public enum UIType
 /// </summary>
 public enum UIRegister
 {
-    TestUI,
+    Fixed1,
+    Fixed2,
+    Normal1,
+    Normal2,
+    Pop1,
+    Pop2,
 }

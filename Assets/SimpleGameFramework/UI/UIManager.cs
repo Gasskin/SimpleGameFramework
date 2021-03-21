@@ -12,9 +12,9 @@ public class UIManager : ManagerBase
     #region Field
 
     // 分别缓存已经加载的三种UI，被加载过不代表正在显示
-    private LinkedList<UIBase> allFixedUI;
-    private LinkedList<UIBase> allNormalUI;
-    private LinkedList<UIBase> allPopUpUI;
+    private Stack<UIBase> allFixedUI;
+    private Stack<UIBase> allNormalUI;
+    private Stack<UIBase> allPopUpUI;
 
     /// 这里记录了所有已经被加载的UI，其实就是上面三个之和
     private Dictionary<string, UIBase> uiLoaded;
@@ -47,9 +47,9 @@ public class UIManager : ManagerBase
     public override void Init()
     {
         // 初始化
-        allFixedUI = new LinkedList<UIBase>();
-        allNormalUI = new LinkedList<UIBase>();
-        allPopUpUI = new LinkedList<UIBase>();
+        allFixedUI = new Stack<UIBase>();
+        allNormalUI = new Stack<UIBase>();
+        allPopUpUI = new Stack<UIBase>();
 
         uiLoaded = new Dictionary<string, UIBase>();
 
@@ -90,7 +90,10 @@ public class UIManager : ManagerBase
 
     #region 接口方法
 
-    public void OpenUI(UIStruct data)
+    /// <summary>
+    /// 打开一个UI
+    /// </summary>
+    public void Open(UIStruct data)
     {
         // 如果这个UI还没被加载，那需要先加载
         if (!uiLoaded.TryGetValue(data.name,out var ui)) 
@@ -99,6 +102,31 @@ public class UIManager : ManagerBase
         }
         // 显示UI
         ShowUI(ui);
+    }
+
+    /// <summary>
+    /// 关闭当前UI，注意此方法只关闭当前打开的最顶层UI
+    /// </summary>
+    public void CloseCurrent()
+    {
+        if (currentUI == null) 
+        {
+            Debug.LogError("没有可以关闭的界面");
+            return;
+        }
+
+        switch (currentUI.type)
+        {
+            case UIType.Fixed:
+                PopFromStack(allFixedUI);
+                break;
+            case UIType.Normal:
+                PopFromStack(allNormalUI);
+                break;
+            case UIType.PopUp:
+                PopFromStack(allPopUpUI);
+                break;
+        }
     }
 
     #endregion
@@ -160,13 +188,13 @@ public class UIManager : ManagerBase
         switch (ui.type)
         {
             case UIType.Fixed:
-                AddToList(ui,allFixedUI);
+                PushToStack(ui,allFixedUI);
                 break;
             case UIType.Normal:
-                AddToList(ui,allNormalUI);
+                PushToStack(ui,allNormalUI);
                 break;
             case UIType.PopUp:
-                AddToList(ui,allPopUpUI);
+                PushToStack(ui,allPopUpUI);
                 break;
         }
     }
@@ -174,9 +202,7 @@ public class UIManager : ManagerBase
     /// <summary>
     /// 将UI加入对应链表，并真正的控制当前UI的显示隐藏逻辑
     /// </summary>
-    /// <param name="ui"></param>
-    /// <param name="list"></param>
-    private void AddToList(UIBase ui, LinkedList<UIBase> list)
+    private void PushToStack(UIBase ui, Stack<UIBase> stack)
     {
         // 打开一个新的UI，当前UI必然被冻结，但未必会隐藏，打开Normal会隐藏Normal但不会隐藏Fixed
         if (currentUI != null) 
@@ -191,9 +217,54 @@ public class UIManager : ManagerBase
             }
         }
         ui.Show();
-        list.AddLast(ui);
+        stack.Push(ui);
         currentUI = ui;
     }
 
+    /// <summary>
+    /// 将UI从对应链表中移除，并真正的控制当前UI的关闭 
+    /// </summary>
+    private void PopFromStack(Stack<UIBase> stack)
+    {
+        // 首先关闭并冻结当前的UI
+        currentUI.Close();
+        currentUI.Freeze();
+        currentUI.gameObject.SetActive(false);
+        // 栈顶UI出栈，其实就是currentUI
+        stack.Pop();
+        // 然后尝试获取当前UI栈中的上一个UI
+        if (stack.Count >= 1)
+        {
+            currentUI = stack.Peek();
+            // 注意，如果当前栈是Pop栈，那么我们关闭顶层的弹窗是不需要重新激活上一个弹窗的，因为Pop类型UI之间不会相互关闭，我们只需要解冻就好
+            if (stack != allPopUpUI) 
+            {
+                currentUI.Show();
+                currentUI.gameObject.SetActive(true);
+            }
+            currentUI.UnFreeze();
+        }
+        // 如果当前栈里没有UI了，那就获取上一个栈中的UI
+        else
+        {
+            // 如果当前栈是Pop，那么currentUI就是Noraml栈中的最后一个元素，其余同理
+            // 另外，因为不同类型的UI之间也不会相互关闭，所以我们也只需要解冻就好
+            if (stack == allPopUpUI)
+            {
+                currentUI = allNormalUI.Peek();
+                currentUI.UnFreeze();
+            }
+            else if (stack == allNormalUI)
+            {
+                currentUI = allFixedUI.Peek();
+                currentUI.UnFreeze();
+            }
+            else
+            {
+                currentUI = null;
+            }
+        }
+    }
+    
     #endregion
 }
