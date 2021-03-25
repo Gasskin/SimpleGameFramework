@@ -6,7 +6,7 @@ public class Fixed1 : UIBase
 {
     public override void Load()
     {
-        type = UIType.Fixed;
+        UIType = UIType.Fixed;
         Debug.Log("加载 Fixed1");
     }
 

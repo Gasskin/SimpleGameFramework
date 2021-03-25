@@ -6,7 +6,7 @@ public class Pop1 : UIBase
 {
     public override void Load()
     {
-        type = UIType.PopUp;
+        UIType = UIType.PopUp;
         Debug.Log("加载 Pop1");
     }
 

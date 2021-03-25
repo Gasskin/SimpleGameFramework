@@ -1,18 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using SimpleGameFramework.Core;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TestUI : UIBase
+public class Update2 : UIBase
 {
+    private UIManager manager;
+
     private Text text;
+    
     public override void Load()
     {
+        UIType = UIType.PopUp;
+
+        manager = SGFEntry.Instance.GetManager<UIManager>();
+
         text = transform.FindText("Image/Text");
         
-        transform.RegisterButton("Button",(() =>
+        transform.RegisterButton("Image/Button",(() =>
         {
-            Debug.Log(123123);
+            manager.CloseCurrent();
         }));
     }
 
@@ -21,21 +29,8 @@ public class TestUI : UIBase
         
     }
 
-    private float time = 0;
     public override void OnUpdate(float deltaTime)
     {
-        time += deltaTime;
-        if (time < 1f) 
-        {
-            return;
-        }
-
         text.text = deltaTime.ToString();
-        time = 0;
-    }
-
-    public override void Show()
-    {
-        Debug.Log("Test Show!");
     }
 }

@@ -78,7 +78,7 @@ public class UIManager : ManagerBase
 
     public override void Update(float time)
     {
-        
+        currentUI.OnUpdate(time);
     }
 
     public override void ShutDown()
@@ -115,7 +115,7 @@ public class UIManager : ManagerBase
             return;
         }
 
-        switch (currentUI.type)
+        switch (currentUI.UIType)
         {
             case UIType.Fixed:
                 PopFromStack(allFixedUI);
@@ -166,7 +166,7 @@ public class UIManager : ManagerBase
         uiLoaded.Add(data.name, ui);
 
         // 根据UI类型，存放到不同的节点中
-        switch (ui.type)
+        switch (ui.UIType)
         {
             case UIType.Fixed:
                 prefab.transform.SetParent(fixedRoot,false);
@@ -185,7 +185,7 @@ public class UIManager : ManagerBase
     /// </summary>
     private void ShowUI(UIBase ui)
     {
-        switch (ui.type)
+        switch (ui.UIType)
         {
             case UIType.Fixed:
                 PushToStack(ui,allFixedUI);
@@ -210,11 +210,15 @@ public class UIManager : ManagerBase
             // 冻结当前的界面
             currentUI.Freeze();
             // 如果打开的不是Pop界面，且打开的界面和当前界面是同类型的，那才需要关闭当前的界面
-            if (ui.type != UIType.PopUp && ui.type == currentUI.type)  
+            if (ui.UIType != UIType.PopUp && ui.UIType == currentUI.UIType)  
             {
                 currentUI.Close();
                 currentUI.gameObject.SetActive(false);
             }
+        }
+        if (!ui.gameObject.activeSelf)
+        {
+            ui.gameObject.SetActive(true);
         }
         ui.Show();
         stack.Push(ui);

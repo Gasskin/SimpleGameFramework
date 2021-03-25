@@ -14,8 +14,8 @@ public class test : MonoBehaviour
     void Start()
     {
         uiManager = SGFEntry.Instance.GetManager<UIManager>();
-        uiManager.Open(UIs.Fixed1);
+        uiManager.Open(UIs.Update1);
     }
-
-    
 }
+
+

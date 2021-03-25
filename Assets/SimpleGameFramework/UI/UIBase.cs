@@ -5,10 +5,27 @@ using UnityEngine;
 
 public abstract class UIBase : MonoBehaviour
 {
-    #region Public
+    #region Field
 
     /// 窗口类型，默认是Normal
-    public UIType type = UIType.Normal;
+    private UIType type = UIType.Normal;
+
+    #endregion
+
+    #region Property
+
+    /// 窗口类型
+    public UIType UIType
+    {
+        get
+        {
+            return type;
+        }
+        set
+        {
+            type = value;
+        }
+    }
 
     #endregion
     
@@ -41,7 +58,7 @@ public abstract class UIBase : MonoBehaviour
     /// <summary>
     /// 会在UI管理器中被统一调用，用于更新
     /// </summary>
-    public virtual void OnUpdate()
+    public virtual void OnUpdate(float deltaTime)
     {
         
     }
