@@ -48,16 +48,11 @@ namespace SimpleGameFramework.Event
 
         #region Public 接口方法
 
-        /// 检查订阅事件处理方法是否存在
-        public bool Check(int id, EventHandler<GlobalEventArgs> handler)
-        {
-            return m_EventPool.Check(id, handler);
-        }
  
         /// 订阅事件
         public void Subscribe(SGFEvents id, EventHandler<GlobalEventArgs> handler)
         {
-#if UNITY_EDITOR
+            #if UNITY_EDITOR
             var trans = SGFEntry.Instance.transform.Find("EventManager");
             var name = id.ToString();
             var temp = trans.Find(name);
@@ -77,7 +72,7 @@ namespace SimpleGameFramework.Event
                 go2.name = $"{handler.Target}：{handler.Method.Name}";
                 go2.transform.SetParent(temp.transform);
             }
-#endif
+            #endif
             m_EventPool.Subscribe(id.GetHashCode(), handler);
         }
  

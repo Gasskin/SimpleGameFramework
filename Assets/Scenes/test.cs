@@ -4,24 +4,15 @@ using SimpleGameFramework.UI;
 using UnityEngine;
 
 
-public class TestRef : IReference
-{
-    public string testName="引用池测试";
-    public void Clear()
-    {
-        Debug.Log("TestRef被清空了");
-    }
-}
-
 public class test : MonoBehaviour
 {
     private ReferenceManager referenceManager;
     void Start()
     {
         referenceManager = SGFEntry.Instance.GetManager<ReferenceManager>();
-        var tempRef = referenceManager.Acquire<TestRef>();
-        Debug.Log(tempRef.testName);
-        referenceManager.Release(tempRef);
+        var tempRef = referenceManager.Acquire<UIOpenEventArgs>();
+        tempRef.data = "测试：打开UI的事件！";
+        SGFEntry.Instance.GetManager<UIManager>().Open(UIs.Fixed1, tempRef);
     }
 }
 

@@ -3,7 +3,6 @@
     /// 注册所有事件的事件编码
     public enum SGFEvents
     {
-        Test,
         /*================== UI相关 =================*/
         OpenUI,
         CloseUI,

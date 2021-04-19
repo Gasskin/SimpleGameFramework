@@ -84,20 +84,7 @@ namespace SimpleGameFramework.Event
                 m_EventHandlers[id] -= handler;
             }
         }
-
-        /// 按顺序执行所有事件队列里的事件
-        public void Update(float time)
-        {
-            while (m_Events.Count > 0)
-            {
-                Event<T> e;
-                lock (m_Events)
-                {
-                    e = m_Events.Dequeue();
-                }
-                HandleEvent(e.Sender,e.EventArgs);
-            }
-        }
+        
         
         /// 抛出事件（线程安全），会按照先后顺序把事件添加进事件队列，并在下一帧处理
         public void Fire(object sender, T e)
@@ -116,24 +103,36 @@ namespace SimpleGameFramework.Event
             HandleEvent(sender, e);
         }
 
-        /// 清空事件队列
-        public void Clear()
+        
+        #endregion
+
+        #region Private 工具方法
+        /// 清空事件池
+        public void ShutDown()
         {
             lock (m_Events)
             {
                 m_Events.Clear();
             }
-        }
-
-        /// 清空事件池
-        public void ShutDown()
-        {
-            Clear();
             m_EventHandlers.Clear();
         }
-
+        
+        /// 按顺序执行所有事件队列里的事件
+        public void Update(float time)
+        {
+            while (m_Events.Count > 0)
+            {
+                Event<T> e;
+                lock (m_Events)
+                {
+                    e = m_Events.Dequeue();
+                }
+                HandleEvent(e.Sender,e.EventArgs);
+            }
+        }
+        
         /// 检查某个编码的事件是否存在它对应的处理方法
-        public bool Check(int id, EventHandler<T> handler)
+        private bool Check(int id, EventHandler<T> handler)
         {
             if (handler == null)
             {
@@ -163,10 +162,6 @@ namespace SimpleGameFramework.Event
             return false;
         }
         
-        #endregion
-
-        #region Private 工具方法
-
         /// 事件处理
         private void HandleEvent(object sender, T e)
         {

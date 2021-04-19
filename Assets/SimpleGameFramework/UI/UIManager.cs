@@ -114,7 +114,7 @@ namespace SimpleGameFramework.UI
             ShowUI(ui);
             // 发送打开UI事件
             uiOpenEventArgs.uiName = ui.uiName;
-            eventManager.Fire(SGFEvents.OpenUI,uiOpenEventArgs);
+            eventManager.FireNow(this,uiOpenEventArgs);
         }
 
         /// <summary>
