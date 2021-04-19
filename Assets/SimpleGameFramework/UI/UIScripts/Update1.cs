@@ -1,4 +1,5 @@
 ﻿using SimpleGameFramework.Core;
+using SimpleGameFramework.UI;
 using UnityEngine.UI;
 
 public class Update1 : UIBase
@@ -17,7 +18,6 @@ public class Update1 : UIBase
         
         transform.RegisterButton("Image/Button",(() =>
         {
-            manager.Open(UIs.Update2);
         }));
     }
 

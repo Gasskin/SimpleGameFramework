@@ -1,20 +1,21 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using SimpleGameFramework.Core;
-using SimpleGameFramework.Event;
+﻿using SimpleGameFramework.Core;
 using SimpleGameFramework.ReferencePool;
+using SimpleGameFramework.UI;
 using UnityEngine;
-using UnityEngine.Profiling;
 
 
 public class test : MonoBehaviour
 {
     private UIManager uiManager;
+    private ReferenceManager referenceManager;
     void Start()
     {
         uiManager = SGFEntry.Instance.GetManager<UIManager>();
-        uiManager.Open(UIs.Update1);
+        referenceManager = SGFEntry.Instance.GetManager<ReferenceManager>();
+        var eventArgs = referenceManager.Acquire<UIOpenEventArgs>();
+        eventArgs.data = "===Fixed1===";
+        uiManager.Open(UIs.Fixed1,eventArgs);
+        //referenceManager.Release(eventArgs);
     }
 }
 

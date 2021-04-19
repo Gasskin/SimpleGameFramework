@@ -105,7 +105,7 @@ namespace SimpleGameFramework.Core
             while (current != null)
             {
  
-                if (manager.Priority > current.Value.Priority)
+                if (manager.Priority < current.Value.Priority)
                 {
                     break;
                 }

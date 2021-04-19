@@ -47,11 +47,16 @@ public static class GenerateUIPath
         sb.AppendLine("{");
         for (int i = 0, imax = names.Length; i < imax; i++)
         {
+            if (names[i].Equals("None")) 
+            {
+                Debug.Log(12321);
+                continue;
+            }
             sb.AppendLine($"    public static UIStruct {names[i]} = new UIStruct(\"{names[i]}\",\"UI/{names[i]}\");");
         }
         sb.AppendLine("}");
 
-        var wirtePath = path + "/UIs.cs";
+        var wirtePath = path + "/UID.cs";
         File.WriteAllText(wirtePath,sb.ToString(),Encoding.UTF8);
         
         AssetDatabase.Refresh();

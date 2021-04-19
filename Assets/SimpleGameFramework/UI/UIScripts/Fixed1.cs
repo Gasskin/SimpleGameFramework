@@ -1,12 +1,32 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using SimpleGameFramework.Core;
+using SimpleGameFramework.ReferencePool;
+using SimpleGameFramework.UI;
 using UnityEngine;
 
 public class Fixed1 : UIBase
 {
+    private UIManager uiManager;
+    private ReferenceManager referenceManager;
     public override void Load()
     {
         UIType = UIType.Fixed;
+        
+        uiManager = SGFEntry.Instance.GetManager<UIManager>();
+        referenceManager = SGFEntry.Instance.GetManager<ReferenceManager>();
+        
+        var eventArgs1 = referenceManager.Acquire<UIOpenEventArgs>();
+        var eventArgs2 = referenceManager.Acquire<UIOpenEventArgs>();
+        //referenceManager.Release(eventArgs1);
+        //referenceManager.Release(eventArgs2);
+        
+        transform.RegisterButton("Button",(() =>
+        {
+            var eventArgs = referenceManager.Acquire<UIOpenEventArgs>();
+            eventArgs.data = "===Fixed2===";
+            uiManager.Open(UIs.Fixed2,eventArgs);
+            referenceManager.Release(eventArgs);
+        }));
+        
         Debug.Log("加载 Fixed1");
     }
 
@@ -33,5 +53,10 @@ public class Fixed1 : UIBase
     public override void UnFreeze()
     {
         Debug.Log("解冻 Fixed1");
+    }
+
+    public override void DoAfterShow(object o, UIOpenEventArgs e)
+    {
+        Debug.Log(e.data);
     }
 }

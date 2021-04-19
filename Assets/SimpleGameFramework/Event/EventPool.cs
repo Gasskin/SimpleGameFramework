@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using SimpleGameFramework.Core;
 using SimpleGameFramework.ReferencePool;
+using UnityEngine;
 
 namespace SimpleGameFramework.Event
 {
@@ -61,7 +62,7 @@ namespace SimpleGameFramework.Event
             // 不为空，就检查处理方法是否重复了
             else if (Check(id, handler))
             {
-                throw new Exception("ID为:" + (SGFEvents)id + "的事件下已存在这个处理方法:" + nameof(handler) + "...");
+                Debug.LogError("ID为:" + (SGFEvents)id + "的事件下已存在这个处理方法:" + nameof(handler) + "...");
             }
             else
             {
@@ -101,7 +102,7 @@ namespace SimpleGameFramework.Event
         /// 抛出事件（线程安全），会按照先后顺序把事件添加进事件队列，并在下一帧处理
         public void Fire(object sender, T e)
         {
-            //将事件源和事件参数封装为Event加入队列
+            // 将事件源和事件参数封装为Event加入队列
             Event<T> eventNode = new Event<T>(sender, e);
             lock (m_Events)
             {
@@ -184,11 +185,8 @@ namespace SimpleGameFramework.Event
                 }
             }
             // 归还引用
-            SGFEntry.Instance.GetManager<ReferenceManager>().Release(e);
+            // SGFEntry.Instance.GetManager<ReferenceManager>().Release<T>(e);
         }
-        
-        
-        
 
         #endregion
     }

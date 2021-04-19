@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using SimpleGameFramework.UI;
 using UnityEngine;
 
 public class Pop2 : UIBase

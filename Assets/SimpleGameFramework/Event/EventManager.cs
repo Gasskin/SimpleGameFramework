@@ -1,5 +1,6 @@
 ﻿using System;
 using SimpleGameFramework.Core;
+using UnityEngine;
 
 namespace SimpleGameFramework.Event
 {
@@ -56,6 +57,27 @@ namespace SimpleGameFramework.Event
         /// 订阅事件
         public void Subscribe(SGFEvents id, EventHandler<GlobalEventArgs> handler)
         {
+#if UNITY_EDITOR
+            var trans = SGFEntry.Instance.transform.Find("EventManager");
+            var name = id.ToString();
+            var temp = trans.Find(name);
+            if (temp == null)   
+            {
+                GameObject go = new GameObject();
+                go.name = name;
+                go.transform.SetParent(trans);
+                
+                GameObject go2 = new GameObject();
+                go2.name = $"{handler.Target}：{handler.Method.Name}";
+                go2.transform.SetParent(go.transform);
+            }
+            else
+            {
+                GameObject go2 = new GameObject();
+                go2.name = $"{handler.Target}：{handler.Method.Name}";
+                go2.transform.SetParent(temp.transform);
+            }
+#endif
             m_EventPool.Subscribe(id.GetHashCode(), handler);
         }
  
@@ -63,6 +85,19 @@ namespace SimpleGameFramework.Event
         public void Unsubscribe(SGFEvents id, EventHandler<GlobalEventArgs> handler)
         {
             m_EventPool.Unsubscribe(id.GetHashCode(), handler);
+#if UNITY_EDITOR
+            var trans = SGFEntry.Instance.transform.Find("EventManager");
+            var group = trans.Find(id.ToString());
+            var child = group.Find($"{handler.Target}：{handler.Method.Name}");
+            if (child != null) 
+            {
+                GameObject.DestroyImmediate(child.gameObject);
+            }
+            if (group.childCount <= 0) 
+            {
+                GameObject.DestroyImmediate(group.gameObject);
+            }
+#endif
         }
         
         /// 抛出事件（线程安全）

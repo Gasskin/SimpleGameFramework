@@ -21,6 +21,8 @@ public enum UIType
 /// </summary>
 public enum UIRegister
 {
+    // 这个None不会被Generate
+    None,
     TestUI,
     Fixed1,
     Fixed2,

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using SimpleGameFramework.Core;
+using SimpleGameFramework.UI;
 using UnityEngine;
 using UnityEngine.UI;
 

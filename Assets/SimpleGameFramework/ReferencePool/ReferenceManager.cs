@@ -13,7 +13,7 @@ namespace SimpleGameFramework.ReferencePool
         private Dictionary<string, ReferenceCollection> s_ReferenceCollections;
 
         /// 清理间隔，每过一段时间，就会清空队列里的引用（还在队列里，说明是空引用），m_temp用于实际计算，想要修改清理间隔可以修改clearInterval
-        private float m_ClearInterval = 60f;
+        private float m_ClearInterval = ManagerConfig.ClearInterval;
         private float m_Temp;
         
         #endregion
@@ -59,6 +59,13 @@ namespace SimpleGameFramework.ReferencePool
             m_Temp -= time;
             if (m_Temp < 0f) 
             {
+#if UNITY_EDITOR
+                var trans = SGFEntry.Instance.transform.Find("ReferenceManager");
+                for (int i = 0; i < trans.childCount; i++)
+                {
+                    GameObject.DestroyImmediate(trans.GetChild(i).gameObject);
+                }
+#endif
                 foreach (var e in s_ReferenceCollections)
                 {
                     e.Value.RemoveAll();
@@ -80,6 +87,16 @@ namespace SimpleGameFramework.ReferencePool
         /// 从引用集合获取引用
         public  T Acquire<T>() where T : class, IReference, new()
         {
+#if UNITY_EDITOR
+            var trans = SGFEntry.Instance.transform.Find("ReferenceManager");
+            var collection = trans.Find(typeof(T).FullName);
+            if (collection == null)
+            {
+                GameObject go = new GameObject();
+                go.name = typeof(T).FullName;
+                go.transform.SetParent(trans);
+            }
+#endif
             return GetReferenceCollection(typeof(T).FullName).Acquire<T>();
         }
         
@@ -90,7 +107,7 @@ namespace SimpleGameFramework.ReferencePool
             {
                 throw new Exception("要归还的引用为空...");
             }
- 
+
             GetReferenceCollection(typeof(T).FullName).Release(reference);
         }
 
