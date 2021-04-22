@@ -7,5 +7,6 @@
         EventManager,
         FsmManager,
         ReferenceManager,
+        ProcedureManager,
     }
 }

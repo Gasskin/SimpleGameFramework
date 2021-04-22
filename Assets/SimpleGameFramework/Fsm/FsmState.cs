@@ -10,8 +10,6 @@ namespace SimpleGameFramework.Fsm
     /// <typeparam name="T">状态持有者类型</typeparam>
     public class FsmState<T> where T : class
     {
-        
- 
         public FsmState()
         {
             m_EventHandlers = new Dictionary<int, FsmEventHandler<T>>();
