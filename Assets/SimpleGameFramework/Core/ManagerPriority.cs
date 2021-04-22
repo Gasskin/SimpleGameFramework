@@ -5,6 +5,7 @@
     {
         UIManager,
         EventManager,
+        FsmManager,
         ReferenceManager,
     }
 }
