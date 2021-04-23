@@ -8,5 +8,6 @@
         FsmManager,
         ReferenceManager,
         ProcedureManager,
+        LanguageManager,
     }
 }

@@ -34,6 +34,7 @@ namespace SimpleGameFramework.Language.Editor
             sb.AppendLine("    public enum LanguageID");
             sb.AppendLine("    {");
             sb.AppendLine("        Invalid = 0,");
+            sb.AppendLine();
             for (int i = 0; i < datas.Length; i++)
             {
                 if (string.IsNullOrEmpty(datas[i])) 
