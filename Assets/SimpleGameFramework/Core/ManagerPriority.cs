@@ -9,5 +9,6 @@
         ReferenceManager,
         ProcedureManager,
         LanguageManager,
+        ObjectPoolManager,
     }
 }

@@ -2,11 +2,19 @@
 {
     public static class ManagerConfig
     {
-        /// 引用池的清理间隔
-        private const int clearInterval = 60;
-        public static int ClearInterval
+        public static class ReferencePoolConfig
         {
-            get { return clearInterval; }
+            /// 默认清理间隔
+            public const int CLEAR_INTERVAL = 60;
+        }
+        
+        public static class ObjectPoolConfig
+        {
+            /// 默认对象池容量
+            public const int DEFAULT_CAPACITY = int.MaxValue;
+     
+            /// 默认对象过期秒数
+            public const float DEFAULT_EXPIRETIME = float.MaxValue;
         }
     }
 }

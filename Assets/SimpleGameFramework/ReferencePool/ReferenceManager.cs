@@ -13,7 +13,7 @@ namespace SimpleGameFramework.ReferencePool
         private Dictionary<string, ReferenceCollection> s_ReferenceCollections;
 
         /// 清理间隔，每过一段时间，就会清空队列里的引用（还在队列里，说明是空引用），m_temp用于实际计算，想要修改清理间隔可以修改clearInterval
-        private float m_ClearInterval = ManagerConfig.ClearInterval;
+        private float m_ClearInterval = ManagerConfig.ReferencePoolConfig.CLEAR_INTERVAL;
         private float m_Temp;
         
         #endregion
