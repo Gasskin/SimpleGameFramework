@@ -166,8 +166,5 @@ namespace SimpleGameFramework.UI
         }
 
         #endregion
-
-
-        
     }
 }

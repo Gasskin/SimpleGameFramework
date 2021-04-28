@@ -10,5 +10,6 @@
         ProcedureManager,
         LanguageManager,
         ObjectPoolManager,
+        DataNodeManager,
     }
 }

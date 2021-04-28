@@ -1,4 +1,6 @@
-﻿using SimpleGameFramework.Core;
+﻿using System.Collections.Generic;
+using SimpleGameFramework.Core;
+using SimpleGameFramework.DataNode;
 using SimpleGameFramework.ObjectPool;
 using UnityEngine;
 
@@ -17,26 +19,29 @@ public class TestObject : ObjectBase
 
 public class test : MonoBehaviour
 {
-    private ObjectPoolManager objectPoolManager;
-    private ObjectPool<TestObject> testPool;
     void Start()
     {
-        objectPoolManager = SGFEntry.Instance.GetManager<ObjectPoolManager>();
-        testPool = objectPoolManager.CreateObjectPool<TestObject>();
+        var dataNodeManager = SGFEntry.Instance.GetManager<DataNodeManager>();
+        
+        // 绝对路径设置数据
+        dataNodeManager.SetData("Player.Property.Hp",100);
+        
+        // 相对路径设置数据
+        var node = dataNodeManager.GetOrAddNode("Player.Message");
+        dataNodeManager.SetData("Name", "Logarius", node);
+        
+        // 直接通过数据节点设置数据
+        var exp = dataNodeManager.GetOrAddNode("Player.Message.Exp");
+        exp.SetData(1000);
 
-        TestObject temp = new TestObject("HelloWorld","test1");
-        testPool.Register(temp);
+        // 获取数据
+        string name = dataNodeManager.GetNode("Player.Message.Name").GetData<string>();
+        int hp = dataNodeManager.GetNode("Player.Property.Hp").GetData<int>();
+        int exps = dataNodeManager.GetNode("Player.Message.Exp").GetData<int>();
+
+        Debug.Log($"{name} {hp} {exps}");
     }
 
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            TestObject testObject = testPool.Spawn("test1");
-            Debug.Log(testObject.Target);
-            testPool.Unspawn(testObject.Target);
-        }
-    }
 }
 
 
