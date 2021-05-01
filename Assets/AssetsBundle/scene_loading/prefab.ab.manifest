@@ -1,0 +1,30 @@
+ManifestFileVersion: 0
+CRC: 1439925083
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 2b3e15f162617de0cb6727d1d48a5800
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: eac5af37e2c611b9696d348e24a968fb
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 65
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources Bundle/Scene_Loading/Prefab/Cube.prefab
+Dependencies: []
