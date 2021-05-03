@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using SimpleGameFramework.Bundle;
+using UnityEngine;
 
 namespace SimpleGameFramework.Core
 {
@@ -22,10 +23,10 @@ namespace SimpleGameFramework.Core
         public static class AssetBundleConfig
         {
             /// 默认需要打包的路径，这个路径下的所有文件会被自动打包为Bundle，依据文件夹分组  
-            public static string DEFAULT_ATUO_PACKAGED_PATH = Application.dataPath + "/Resources Bundle";
-            
+            public static string DEFAULT_ATUO_PACKAGED_PATH = BundleUtils.GetBundleResourcePath();
+
             /// 默认打包的位置，资源文件会被打包到这个路径下
-            public const string DEFAULT_PACKAGED_LOCATION = "Assets/AssetsBundle";
+            public static string DEFAULT_PACKAGED_LOCATION = BundleUtils.GetPackageToLocation();
         }
     }
 }

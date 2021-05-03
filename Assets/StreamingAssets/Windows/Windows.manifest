@@ -1,19 +1,20 @@
 ManifestFileVersion: 0
-CRC: 1011486513
+CRC: 2343215611
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
       Name: scene_loading/material.ab
       Dependencies: {}
     Info_1:
-      Name: scene_loading/prefab.ab
+      Name: scene_loading/prefab/prefab2.ab
       Dependencies: {}
     Info_2:
+      Name: scene_loading/prefab.ab
+      Dependencies:
+        Dependency_0: scene_loading/material.ab
+    Info_3:
       Name: scene_playing/material.ab
       Dependencies: {}
-    Info_3:
-      Name: scene_playing/prefab.ab
-      Dependencies: {}
     Info_4:
-      Name: scene_loading/prefab/prefab2.ab
+      Name: scene_playing/prefab.ab
       Dependencies: {}

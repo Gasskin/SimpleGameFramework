@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 1439925083
+CRC: 4287122289
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 2b3e15f162617de0cb6727d1d48a5800
+    Hash: ce71738d6efc7cf0e1d0565236d24012
   TypeTreeHash:
     serializedVersion: 2
-    Hash: eac5af37e2c611b9696d348e24a968fb
+    Hash: 7d1e0093d0592ca7550333bbf0c8f406
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -21,10 +21,9 @@ ClassTypes:
   Script: {instanceID: 0}
 - Class: 43
   Script: {instanceID: 0}
-- Class: 48
-  Script: {instanceID: 0}
 - Class: 65
   Script: {instanceID: 0}
 Assets:
 - Assets/Resources Bundle/Scene_Loading/Prefab/Cube.prefab
-Dependencies: []
+Dependencies:
+- G:/Resource/WorkSpace_Unity/SimpleGameFramework/Assets/StreamingAssets/Windows/scene_loading/material.ab

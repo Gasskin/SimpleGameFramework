@@ -3,7 +3,7 @@ using SimpleGameFramework.Core;
 using UnityEditor;
 using UnityEngine;
 
-namespace SimpleGameFramework.AssetBundle.Editor
+namespace SimpleGameFramework.Bundle.Editor
 {
     public static class AutoPackaged 
     {
@@ -30,12 +30,11 @@ namespace SimpleGameFramework.AssetBundle.Editor
 
             string dir = ManagerConfig.AssetBundleConfig.DEFAULT_PACKAGED_LOCATION;
 
-            // 每次打包都要把原来的包删掉
-            if (Directory.Exists(dir))
+ 
+            if (!Directory.Exists(dir))
             {
-                Directory.Delete(dir,true);
+                Directory.CreateDirectory(dir);
             }
-            Directory.CreateDirectory(dir);
 
             BuildPipeline.BuildAssetBundles(dir, BuildAssetBundleOptions.None,BuildTarget.StandaloneWindows64);
             
