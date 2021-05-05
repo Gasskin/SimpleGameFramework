@@ -10,6 +10,7 @@
         ProcedureManager,
         LanguageManager,
         ObjectPoolManager,
+        AssetManager,
         DataNodeManager,
     }
 }

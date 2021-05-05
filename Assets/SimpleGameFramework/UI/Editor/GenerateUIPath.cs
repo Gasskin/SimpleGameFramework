@@ -8,7 +8,7 @@ using UnityEngine;
 
 public static class GenerateUIPath
 {
-    [MenuItem("SGFTools/UI/GenerateUIPath")]
+    [MenuItem("SGFTools/UI/Generate UID.cs")]
     public static void Generate()
     {
         // Application.dataPath是Assets的路径

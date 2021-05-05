@@ -3,13 +3,14 @@ using SimpleGameFramework.Core;
 using UnityEditor;
 using UnityEngine;
 
-namespace SimpleGameFramework.Bundle.Editor
+namespace SimpleGameFramework.Resource.Bundle.Editor
 {
     public static class AutoPackaged 
     {
-        [MenuItem("SGFTools/Asset Bundle/PackagedAll")]
-        public static void Package()
+        [MenuItem("SGFTools/Asset Bundle/SetLabel")]
+        public static void SetLabel()
         {
+            Debug.Log(string.Format("<color=green>开始设置资源标签...</color>"));
             // 清空没有使用过的AB标记
             AssetDatabase.RemoveUnusedAssetBundleNames();
             
@@ -26,16 +27,26 @@ namespace SimpleGameFramework.Bundle.Editor
             }
 
             Debug.Log(string.Format("<color=green>AssetBundle自动标记完成！</color>"));
+            
+            // 刷新
+            AssetDatabase.Refresh();
+        }
+
+        [MenuItem("SGFTools/Asset Bundle/Package")]
+        public static void Package()
+        {
             Debug.Log("开始打包AseetBundle...");
 
             string dir = ManagerConfig.AssetBundleConfig.DEFAULT_PACKAGED_LOCATION;
 
  
-            if (!Directory.Exists(dir))
+            if (Directory.Exists(dir))
             {
-                Directory.CreateDirectory(dir);
+                Directory.Delete(dir,true);
             }
 
+            Directory.CreateDirectory(dir);
+            
             BuildPipeline.BuildAssetBundles(dir, BuildAssetBundleOptions.None,BuildTarget.StandaloneWindows64);
             
             Debug.Log(string.Format("<color=green>AssetBundle打包完成！</color>"));

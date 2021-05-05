@@ -1,4 +1,4 @@
-﻿using SimpleGameFramework.Bundle;
+﻿using SimpleGameFramework.Resource.Bundle;
 using UnityEngine;
 
 namespace SimpleGameFramework.Core
@@ -26,7 +26,7 @@ namespace SimpleGameFramework.Core
             public static string DEFAULT_ATUO_PACKAGED_PATH = BundleUtils.GetBundleResourcePath();
 
             /// 默认打包的位置，资源文件会被打包到这个路径下
-            public static string DEFAULT_PACKAGED_LOCATION = BundleUtils.GetPackageToLocation();
+            public static string DEFAULT_PACKAGED_LOCATION = BundleUtils.GetPackageToLocation()+$"/{BundleUtils.GetPlatformName()}";
         }
     }
 }
