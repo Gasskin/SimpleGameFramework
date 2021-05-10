@@ -1,6 +1,7 @@
 ﻿using SimpleGameFramework.Core;
 using SimpleGameFramework.ReferencePool;
 using SimpleGameFramework.UI;
+using SimpleGameFramework.UI.Generated;
 using UnityEngine;
 
 public class Fixed1 : UIBase

@@ -65,6 +65,11 @@ namespace SimpleGameFramework.Resource
 
         #region 接口
 
+        public T LoadAsset<T>(string relativePath) where T : Object
+        {
+           return Resources.Load<T>(relativePath);
+        }
+
         /// <summary>
         /// 加载资源
         /// </summary>

@@ -12,5 +12,6 @@
         ObjectPoolManager,
         AssetManager,
         DataNodeManager,
+        CriwareManager,
     }
 }

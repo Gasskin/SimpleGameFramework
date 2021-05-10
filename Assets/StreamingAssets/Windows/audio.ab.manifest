@@ -1,0 +1,26 @@
+ManifestFileVersion: 0
+CRC: 993667324
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: c60dc4badddbbb0e2d32cbab636a0eb0
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: bdd67ef2385a049388077e0520d9e9c4
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 5e49f339aff054453b2d8287aec75bf2, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: f154ff0ac54c142928b46e94a4ee0790, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 91f529aa944b914449d62b8c40f188fe, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources Bundle/Audio/AudioComponent.prefab
+Dependencies: []

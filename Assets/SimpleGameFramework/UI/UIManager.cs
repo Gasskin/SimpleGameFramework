@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using SimpleGameFramework.Core;
 using SimpleGameFramework.Event;
 using SimpleGameFramework.ReferencePool;
+using SimpleGameFramework.UI.Generated;
 using UnityEngine;
 
 namespace SimpleGameFramework.UI

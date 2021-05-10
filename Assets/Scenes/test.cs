@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using AudioFramework;
+using SimpleGameFramework.Audio;
 using SimpleGameFramework.Core;
 using SimpleGameFramework.DataNode;
 using SimpleGameFramework.ObjectPool;
 using SimpleGameFramework.Resource;
 using SimpleGameFramework.Resource.Bundle;
 using SimpleGameFramework.Resource.Bundle.Generated;
+using UnityEditor.Experimental;
 using UnityEngine;
 
 public class test : MonoBehaviour
@@ -14,8 +17,7 @@ public class test : MonoBehaviour
     private AssetManager assetManager;
     private void Start()
     {
-        assetManager = SGFEntry.Instance.GetManager<AssetManager>();
-        cube = assetManager.LoadAsset<GameObject>(BundleAssets.scene_loading_prefab_Cube);
+        AudioCenter.PlayAudio(CriwareAudios.demoproj.bgm_05);
     }
 
     private void Update()

@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 2343215611
+CRC: 583738657
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -10,11 +10,13 @@ AssetBundleManifest:
       Dependencies: {}
     Info_2:
       Name: scene_loading/prefab.ab
-      Dependencies:
-        Dependency_0: scene_loading/material.ab
+      Dependencies: {}
     Info_3:
       Name: scene_playing/material.ab
       Dependencies: {}
     Info_4:
       Name: scene_playing/prefab.ab
+      Dependencies: {}
+    Info_5:
+      Name: audio.ab
       Dependencies: {}
